@@ -80,12 +80,16 @@ def api_getUserPublic(username):
     return jsonify(userPub)
 
 @app.route('/api/favorite', methods=['POST', 'PUT'])
-def apifav():
-    rawdata=request.data
-    enc = chardet.detect(rawdata)
-    dataurl = str(rawdata.decode(enc['encoding']))
-    datastring = unquote(dataurl).replace("data=","").replace('"',"'") #sorry for this heavy-handed workaround... ajax is annoying
-    data=ast.literal_eval(datastring)
+def apifav(): #normal request
+    data={}
+    if(request.form.get("username", False)):
+        data={"username":request.form.get("username", False),"likes":json.loads(request.form.get("likes", False))}
+    else: #ajax put request :(
+        rawdata=request.data
+        enc = chardet.detect(rawdata)
+        dataurl = str(rawdata.decode(enc['encoding']))
+        datastring = unquote(dataurl).replace("data=","").replace('"',"'") #sorry for this heavy-handed workaround... ajax is annoying
+        data=ast.literal_eval(datastring)
     if(request.method == 'POST'):
         username=data['username']
         addLikes(username, data["likes"])

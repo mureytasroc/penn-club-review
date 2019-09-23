@@ -24,6 +24,6 @@ def getUserByUsernamePublic(username):
     (user, index) = getUserByUsername(username)
     if(user == None):
         return (None, -1)
-    return {"username":username,"name":user["name"],"year":user["year"], "school":user["school"],"favtags":user["favtags"], "favclubs":user["favclubs"]}
+    return {"username":username,"name":user["name"],"year":user["year"], "school":user["school"],"favclubs":user["favclubs"]}
     #the above return ensures that only public-safe user data is returned
     #(excluding passwords, activity history, or anything else in our user database that might be sensitive info)

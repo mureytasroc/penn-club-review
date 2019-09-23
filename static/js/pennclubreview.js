@@ -43,11 +43,6 @@ if(document.title == "PennClubReview - Clubs"){
 
     })
   })
-  $('#signout').on('click', function(event){
-    userCode=""
-    sessionStorage.clear()
-    window.location="/"
-  })
   if($('#clubTags').text()!=""){
     tags=JSON.parse($('#clubTags').text())
   }
@@ -116,6 +111,11 @@ else{
   if(!userCode){
     window.location="/"
   }
+  $('#signout').on('click', function(event){
+    userCode=""
+    sessionStorage.clear()
+    window.location="/"
+  })
 }
 
 

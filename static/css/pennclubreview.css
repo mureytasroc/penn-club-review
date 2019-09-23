@@ -1,0 +1,9 @@
+.tags{
+  background-color:	#D3D3D3;
+  padding-top: 0.2cm;
+  padding-bottom: 0.2cm;
+}
+
+button > * {
+  pointer-events: none;
+}

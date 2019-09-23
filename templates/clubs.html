@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>PennClubReview - Clubs</title>
+
+  <link href="{{ url_for('static', filename='css/pennclubreview.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/heroic-features.css') }}" rel="stylesheet">
+  <script src="https://use.fontawesome.com/d5a524b2fd.js"></script>
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap-tagsinput.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Penn Club Review</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Top</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('accountPage')}}">Account</a>
+          </li>
+          <li class="nav-item">
+            <a id="signout" class="nav-link" href="#">Sign Out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <span id="userCode" style="display:none">{% if userCode is defined %}{{ userCode }}{% endif %}</span>
+  <span id="likedClubs" style="display:none">{% if likedClubs is defined %}{{ likedClubs }}{% endif %}</span>
+  <span id="clubTags" style="display:none">{{ tags }}</span>
+
+
+
+  <div class="container">
+    <header class="jumbotron my-4">
+      <h1 class="display-3">Clubs</h1>
+<br><br>
+        <div class="form-group">
+          <label for="searchterm">Name includes (empty yields all):</label>
+          <input type="text" class="form-control" id="searchterm"><br>
+            <label for="tagselect">Tags:</label>
+            <select multiple class="form-control" id="tagselect">
+              {% for t in tagsAr %}
+                <option>{{ t }}</option>
+              {% endfor %}
+            </select>
+            <br>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="likedonly">
+              <label class="custom-control-label" for="likedonly">Only show liked clubs</label>
+            </div>
+            <br>
+            <button id="searchbut" type="submit" class="btn btn-primary">Search</button>
+          </div>
+
+
+    </header>
+
+
+
+    <div class="row text-center">
+      {% for club in clubs %}
+      <div class="clubCard col-lg-3 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4 class="card-title">{{ club.name }}</h4>
+            <p class="card-text">{{ club.description[0:125] }}</p>
+          </div>
+          <div class="tags">
+            {% for tag in club["tags"] %}
+              <span class="tagspan badge badge-pill badge-primary" style="background-color:{{ club['tagColors'][club['tags'].index(tag)] }}">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          <div class="card-footer">
+            <a href="{{ url_for('reviewsPage', cname=club['name'].replace(' ','_')) }}" class="btn btn-primary">More</a>
+            <button class="likeButton btn btn-default heart"><span class="lovename" style="display:none">{{ club.name }}</span><i class="fa fa-heart" style="color:black"></i> <span class="lovecounter">{{ club['likes'] }}</span></button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Made with <span class="icon is-small" style="color:#F56F71"><i class="fa fa-heart"></i></span> by a Penn Labs Applicant</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap-tagsinput.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/pennclubreview.js') }}"></script>
+
+
+</body>
+
+</html>
